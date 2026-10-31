@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1950" viewBox="0 0 1000 1950" role="img" aria-labelledby="title desc">
+  <title id="title">經歷經驗｜我的成長樹</title>
+  <desc id="desc">一棵樹串起四段經歷：呈定企業有限公司廠務專員、全盛科技實習工程師、海軍陸戰隊通訊士與醫務士，以及自家企業社水電小幫手。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f7d6c7"/><stop offset="1" stop-color="#f7d6c7"/></linearGradient>
+    <filter id="shadow" x="-15%" y="-20%" width="130%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#a56c58" flood-opacity=".12"/></filter>
+  </defs>
+  <rect width="1000" height="1950" rx="38" fill="url(#bg)"/>
+  <g font-family="Noto Sans TC, Microsoft JhengHei, PingFang TC, sans-serif">
+    <!-- 標題與小裝飾 -->
+    <rect x="70" y="61" width="154" height="36" rx="18" fill="#fbe9df"/>
+    <text x="147" y="85" font-size="15" font-weight="700" text-anchor="middle" letter-spacing="2" fill="#986857">MY JOURNEY</text>
+    <text x="70" y="156" font-size="49" font-weight="700" letter-spacing="2" fill="#68483e">我的經歷成長樹</text>
+    <text x="72" y="199" font-size="21" fill="#997467">一段一段累積，長成現在的自己</text>
+    <circle cx="869" cy="101" r="34" fill="#f6bd95"/>
+    <circle cx="856" cy="93" r="4" fill="#8f604e"/><circle cx="882" cy="93" r="4" fill="#8f604e"/>
+    <path d="M860 109 Q869 118 878 109" fill="none" stroke="#8f604e" stroke-width="3" stroke-linecap="round"/>
+    <path d="M70 239H930" stroke="#e9b9a8" stroke-width="2"/>
+
+    <!-- 樹冠 -->
+    <g>
+      <circle cx="171" cy="344" r="64" fill="#eeb29c"/>
+      <circle cx="223" cy="321" r="70" fill="#f6c7b5"/>
+      <circle cx="269" cy="354" r="62" fill="#e9a48e"/>
+      <circle cx="201" cy="377" r="66" fill="#f3bda9"/>
+      <circle cx="135" cy="373" r="37" fill="#fad3c2"/>
+      <circle cx="149" cy="343" r="8" fill="#fff0da"/><circle cx="255" cy="323" r="7" fill="#ffe4d0"/><circle cx="198" cy="368" r="6" fill="#fff4e5"/>
+      <path d="M233 373q12 -10 22 0" fill="none" stroke="#cd8f79" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <!-- 樹幹與根 -->
+    <path d="M212 405 C205 635 224 820 211 1054 C201 1264 219 1465 209 1712" fill="none" stroke="#a86d58" stroke-width="26" stroke-linecap="round"/>
+    <path d="M205 566 C243 554 263 512 309 512 M215 864 C251 849 271 808 309 808 M211 1188 C252 1176 270 1136 309 1136 M214 1535 C251 1520 271 1478 309 1478" fill="none" stroke="#a86d58" stroke-width="13" stroke-linecap="round"/>
+    <path d="M210 1712 C198 1734 171 1742 151 1745 M210 1712 C218 1736 248 1743 269 1745" fill="none" stroke="#a86d58" stroke-width="13" stroke-linecap="round"/>
+    <!-- 樹葉 -->
+    <g fill="#e7a28d">
+      <path d="M200 549 C164 543 151 517 155 497 C181 497 201 515 200 549Z"/>
+      <path d="M219 694 C254 687 268 665 264 643 C238 645 220 663 219 694Z"/>
+      <path d="M207 846 C170 843 157 821 159 799 C187 801 205 818 207 846Z"/>
+      <path d="M208 1044 C243 1038 255 1016 253 995 C227 996 211 1015 208 1044Z"/>
+      <path d="M204 1171 C169 1166 156 1145 158 1124 C183 1126 202 1142 204 1171Z"/>
+      <path d="M216 1375 C250 1370 264 1347 262 1326 C236 1327 220 1345 216 1375Z"/>
+      <path d="M207 1521 C174 1515 161 1494 164 1474 C188 1475 205 1492 207 1521Z"/>
+      <path d="M211 1650 C244 1645 257 1624 254 1604 C230 1606 213 1623 211 1650Z"/>
+    </g>
+    <g fill="#fff1df"><circle cx="179" cy="730" r="8"/><circle cx="246" cy="963" r="7"/><circle cx="168" cy="1330" r="7"/><circle cx="251" cy="1570" r="8"/></g>
+
+    <!-- 柔和卡片 -->
+    <g filter="url(#shadow)">
+      <rect x="309" y="403" width="621" height="272" rx="26" fill="#fff8f2"/>
+      <rect x="309" y="716" width="621" height="236" rx="26" fill="#fff8f2"/>
+      <rect x="309" y="1027" width="621" height="291" rx="26" fill="#fff8f2"/>
+      <rect x="309" y="1388" width="621" height="236" rx="26" fill="#fff8f2"/>
+    </g>
+    <!-- 果實編號 -->
+    <circle cx="309" cy="512" r="22" fill="#dc8e77" stroke="#f7d6c7" stroke-width="5"/>
+    <circle cx="309" cy="808" r="22" fill="#dfa888" stroke="#f7d6c7" stroke-width="5"/>
+    <circle cx="309" cy="1136" r="22" fill="#d89d8b" stroke="#f7d6c7" stroke-width="5"/>
+    <circle cx="309" cy="1478" r="22" fill="#d9aba4" stroke="#f7d6c7" stroke-width="5"/>
+    <g text-anchor="middle" fill="#fff8f2" font-size="14" font-weight="700"><text x="309" y="517">1</text><text x="309" y="813">2</text><text x="309" y="1141">3</text><text x="309" y="1483">4</text></g>
+
+    <!-- 呈定企業 -->
+    <rect x="347" y="430" width="171" height="34" rx="17" fill="#f9ded1"/>
+    <text x="432" y="453" text-anchor="middle" font-size="16" font-weight="700" fill="#975c4a">2025/7 — 2026/7</text>
+    <text x="347" y="505" font-size="29" font-weight="700" fill="#60483f">呈定企業有限公司</text>
+    <text x="347" y="540" font-size="20" font-weight="700" fill="#a66d58">廠務專員</text>
+    <text x="347" y="582" font-size="21" fill="#73594e">
+      <tspan x="347">食品製造業廠區的水電、弱電、空調、</tspan>
+      <tspan x="347" dy="32">消防與監控設備巡檢、維護及修繕；</tspan>
+      <tspan x="347" dy="32">參與工程發包、監工與驗收。</tspan>
+    </text>
+
+    <!-- 全盛科技 -->
+    <rect x="347" y="743" width="171" height="34" rx="17" fill="#fae4d8"/>
+    <text x="432" y="766" text-anchor="middle" font-size="16" font-weight="700" fill="#a36b50">2025/3 — 2025/5</text>
+    <text x="347" y="818" font-size="29" font-weight="700" fill="#60483f">全盛科技</text>
+    <text x="347" y="853" font-size="20" font-weight="700" fill="#a36b50">實習工程師</text>
+    <text x="347" y="901" font-size="21" fill="#73594e">弱電實習，參與網路布置。</text>
+
+    <!-- 海軍陸戰隊 -->
+    <rect x="347" y="1054" width="190" height="34" rx="17" fill="#fae4db"/>
+    <text x="442" y="1077" text-anchor="middle" font-size="16" font-weight="700" fill="#a56856">2013/6 — 2023/12</text>
+    <text x="347" y="1129" font-size="29" font-weight="700" fill="#60483f">海軍陸戰隊</text>
+    <text x="347" y="1164" font-size="20" font-weight="700" fill="#a56856">通訊士、醫務士</text>
+    <text x="347" y="1206" font-size="21" fill="#73594e">
+      <tspan x="347">網路布置、電話線路架設、無線電設備</tspan>
+      <tspan x="347" dy="32">維修保養及醫務所救護庫館工作。</tspan>
+      <tspan x="347" dy="32">處理人事、訓練、行政採購文書，</tspan>
+      <tspan x="347" dy="32">以及跨單位協調。</tspan>
+    </text>
+
+    <!-- 自家企業社 -->
+    <rect x="347" y="1415" width="103" height="34" rx="17" fill="#f7e0dd"/>
+    <text x="398" y="1438" text-anchor="middle" font-size="16" font-weight="700" fill="#a67570">國小起</text>
+    <text x="347" y="1490" font-size="29" font-weight="700" fill="#60483f">自家企業社</text>
+    <text x="347" y="1525" font-size="20" font-weight="700" fill="#a67570">水電小幫手</text>
+    <text x="347" y="1573" font-size="21" fill="#73594e">有空就被抓去當小幫手。</text>
+
+    <!-- 地面與結語 -->
+    <path d="M65 1747 C182 1738 271 1740 328 1747" fill="none" stroke="#e7b5a4" stroke-width="5" stroke-linecap="round"/>
+    <path d="M83 1744 q-9 -15 -21 -15 M95 1745 q2 -18 12 -24 M286 1745 q8 -15 19 -16" fill="none" stroke="#d79882" stroke-width="5" stroke-linecap="round"/>
+    <rect x="309" y="1686" width="621" height="112" rx="24" fill="#fbe6dc"/>
+    <text x="343" y="1726" font-size="16" font-weight="700" fill="#a36c59">一路上重視的事</text>
+    <text x="343" y="1767" font-size="21" font-weight="700" fill="#805344">設備穩定　・　工作交接　・　跨單位溝通</text>
+    <path d="M70 1848H930" stroke="#e9b9a8" stroke-width="2"/>
+    <text x="70" y="1891" font-size="16" letter-spacing="2" fill="#aa7e6f">GROWING WITH EXPERIENCE</text>
+    <text x="930" y="1891" font-size="16" text-anchor="end" fill="#aa7e6f">由近到遠，慢慢長大</text>
+  </g>
+</svg>
+
