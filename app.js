@@ -1,7 +1,8 @@
-import {regions,rgb,clamp,smooth,wrap,regionAt} from './content.js';
+import {regions,rgb,clamp,smooth,wrap,regionAt,simulatedSun} from './content.js';
 import {EggScene} from './scene.js';
 import {renderMarkdown} from './markdown.js';
 import {setupProjectDisclosure} from './expand-project-text.js';
+import {setupExperienceDisclosure} from './expand-experience.js';
 const $=id=>document.getElementById(id),canvas=$('egg-canvas'),reading=$('reading'),scroller=$('reading-scroll');
 let scene;try{scene=new EggScene(canvas)}catch(error){$('error-message').hidden=false;$('intro-veil').style.opacity=0;console.error(error);throw error}
 const rad=Math.PI/180, reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -40,11 +41,13 @@ async function loadRegionContent(index){
   const source=await response.text();if(request!==contentRequest||index!==entryRegion)return;
   const intro=source.match(/^簡介：([^\r\n]*)\r?$/m);setText('reading-intro',intro?intro[1].trim():'');
   const rendered=renderMarkdown(source.replace(/^簡介：[^\r\n]*\r?\n?/m,''),url,document,{workPhotos:index===3});setText('reading-title',rendered.title||'');body.replaceChildren(rendered.fragment);
+  if(index===1)setupExperienceDisclosure(body);
   if(index===2)setupProjectDisclosure(body);
   if(!body.textContent.trim()&&!body.querySelector('img'))body.textContent='這一面的內容尚未填寫。';
  }catch(error){if(request===contentRequest){body.textContent='這一面的內容暫時無法載入，請稍後再試。';console.error('區域內容載入失敗',error)}}
 }
-function showContent(){if(!visited[entryRegion]){visited[entryRegion]=true;order.push(entryRegion);syncVisited()}wordAlpha[entryRegion]=wordDye[entryRegion]=1;let col=rgb(regions[entryRegion].color);reading.style.background=world>.99?mixedBackground(entryRegion,true):`rgb(${col.map(x=>Math.round((.37+x*.63)*255)).join(',')})`;setText('reading-symbol',regions[entryRegion].title);setText('reading-intro','');setText('reading-title','');setText('reading-index',String(entryRegion+1).padStart(2,'0')+' / 06');reading.hidden=false;reading.style.opacity=0;scroller.scrollTop=0;$('experience').inert=true;setMode('reading');readingSince=performance.now();exitPressure=0;edgeAt=0;setText('exit-hint','往下閱讀');loadRegionContent(entryRegion);requestAnimationFrame(()=>{reading.style.opacity=1;scroller.focus({preventScroll:true})})}
+function setRegionHeading(index){$('reading-region-label').textContent='｜'+regions[index].heading}
+function showContent(){if(!visited[entryRegion]){visited[entryRegion]=true;order.push(entryRegion);syncVisited()}wordAlpha[entryRegion]=wordDye[entryRegion]=1;let col=rgb(regions[entryRegion].color);reading.style.background=world>.99?mixedBackground(entryRegion,true):`rgb(${col.map(x=>Math.round((.37+x*.63)*255)).join(',')})`;reading.dataset.region=entryRegion;setText('reading-symbol',regions[entryRegion].title);setRegionHeading(entryRegion);setText('reading-intro','');setText('reading-title','');setText('reading-index',String(entryRegion+1).padStart(2,'0')+' / 06');reading.hidden=false;reading.style.opacity=0;scroller.scrollTop=0;$('experience').inert=true;setMode('reading');readingSince=performance.now();exitPressure=0;edgeAt=0;setText('exit-hint','往下閱讀');loadRegionContent(entryRegion);requestAnimationFrame(()=>{reading.style.opacity=1;scroller.focus({preventScroll:true})})}
 function leaveContent(){if(mode!=='reading')return;reading.style.opacity=0;setMode('leaving');$('experience').inert=false;distance=tdistance=returnDistance;$('portal').style.opacity=1;modeTime=0;}
 function openShell(){if(mode!=='explore'||order.length!==6||world<.99)return;dwell=0;setMode('opening');$('open-shell').hidden=true;}
 function closeShell(){if(mode!=='open')return;setMode('closing');$('close-shell').hidden=true;}
@@ -95,10 +98,11 @@ function frame(now){let dt=Math.min((now-last)/1000,.5);last=now;if(!visible){re
  if(mode==='opening'){words=1-smooth(0,.7,modeTime);crack=smooth(.8,2.8,modeTime);open=smooth(2.9,4.6,modeTime);if(modeTime>4.7){open=1;setMode('open')}}
  if(mode==='closing'){open=1-smooth(0,1.4,modeTime);crack=1-smooth(1.45,3,modeTime);words=smooth(3.1,3.9,modeTime);if(modeTime>4){open=crack=0;words=1;zoomIntent=false;setMode('explore')}}
  for(let i=0;i<6;i++){let show=visited[i]||questionReady&&i===region&&inPosition&&mode==='explore'||i===entryRegion&&['entering','leaving'].includes(mode);wordAlpha[i]+=(Number(show)-wordAlpha[i])*Math.min(1,dt*4);if(visited[i])wordDye[i]=1;}
- let dir=[Math.sin(yaw)*Math.cos(pitch),Math.sin(pitch),Math.cos(yaw)*Math.cos(pitch)],flip=smooth(.30,.70,(1-(dir[1]*.55+dir[2]*.835))/2),lights=regions.map((_,i)=>{let visitIndex=order.indexOf(i);return visitIndex<0?0:smooth(.4+visitIndex*.46,1.8+visitIndex*.46,worldTime)});
- scene.render({yaw,pitch,distance,flip,world,lights,time:now/1000,tint,crack,open,words,region,wordAlpha,wordDye,questionAlpha:0});
+ let dir=[Math.sin(yaw)*Math.cos(pitch),Math.sin(pitch),Math.cos(yaw)*Math.cos(pitch)],sun=simulatedSun(),flip=smooth(.30,.70,(1-(dir[0]*sun[0]+dir[1]*sun[1]+dir[2]*sun[2]))/2),lights=regions.map((_,i)=>{let visitIndex=order.indexOf(i);return visitIndex<0?0:smooth(.4+visitIndex*.46,1.8+visitIndex*.46,worldTime)});
+ scene.render({yaw,pitch,distance,flip,sun,world,lights,time:now/1000,tint,crack,open,words,region,wordAlpha,wordDye,questionAlpha:0});
  $('intro-veil').style.opacity=veil;document.documentElement.style.setProperty('--ink',veil>.4?'#333330':world>.3?'#faf8f3':flip>.5?'#30302e':'#ecece7');document.body.dataset.soundLight=String(veil>.4||(world<.3&&flip>.5)||mode==='reading');
  const chapter=world>.95?'04':unlocked&&distance>fitDistance()*1.5?'03':distance>=fitDistance()*.80?'02':'01';setText('stage-name',world>.95?'彼界':chapter==='03'?'異視':chapter==='02'?'認識':'相逢');
+ $('region-name').hidden=mode!=='explore'||!questionReady||wordAlpha[region]<.5;setText('region-name',regions[region].title+'｜'+regions[region].label);
  $('axis-panel').hidden=!unlocked||mode==='reading';$('visited').style.opacity=questionReady?1:0;$('open-shell').hidden=order.length!==6||world<.99||mode!=='explore';$('close-shell').hidden=mode!=='open';
  if(mode==='open'){let [x,y]=scene.capLabel;$('close-shell').style.left=clamp(x,40,innerWidth-40)+'px';$('close-shell').style.top=clamp(y,90,innerHeight-150)+'px'}
  if(!$('open-shell').hidden){let edge=Math.min(innerHeight*1.05/(Math.max(distance-1.1,.5)*Math.tan(Math.PI/8)*2),innerWidth*.38);$('open-shell').style.left=clamp(innerWidth/2+edge+12,55,innerWidth-42)+'px';$('open-shell').style.top=clamp(innerHeight*.50,105,innerHeight-190)+'px'}
