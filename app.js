@@ -55,7 +55,7 @@ function jumpToWorld(){reset();unlocked=true;progress=curProgress=1;questionRead
 $('restart').onclick=reset;$('home').onclick=e=>{e.preventDefault();reset()};$('return').onclick=leaveContent;$('open-shell').onclick=openShell;
 $('world-test').onclick=jumpToWorld;
 let soundOn=false,soundStatusTimer=0,crackTimer=0,soundRequest=0;
-const crackSound=new Audio('./sounds/shell-crack-preview.mp3?v=1.33');crackSound.preload='auto';
+const crackSound=$('shell-crack-sound');
 const backgroundMusic=$('background-music');backgroundMusic.volume=.35;
 function stopCrackSound(){clearTimeout(crackTimer);crackSound.pause();crackSound.currentTime=0}
 function updateSoundUI(message){$('sound-toggle').classList.toggle('enabled',soundOn);$('sound-toggle').setAttribute('aria-pressed',String(soundOn));$('sound-toggle').setAttribute('aria-label',(soundOn?'關閉':'開啟')+'聲音');$('sound-status').textContent=message;clearTimeout(soundStatusTimer);soundStatusTimer=setTimeout(()=>{$('sound-status').textContent=''},2500)}
