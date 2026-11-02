@@ -15,7 +15,7 @@ const readDistance=()=>Math.max(1.34/(.67*Math.tan(Math.PI/8)),1.08/(.76*(innerW
 const coinDistance=()=>1.34/(clamp(innerHeight*.14,92,110)/innerHeight*Math.tan(Math.PI/8));
 const journeyDistance=p=>p<.56?Math.exp(Math.log(1.04)+(Math.log(fitDistance())-Math.log(1.04))*smooth(0,.52,p)):Math.exp(Math.log(fitDistance())+(Math.log(coinDistance())-Math.log(fitDistance()))*smooth(.58,1,p));
 const canControl=()=>['journey','explore','open'].includes(mode);
-const canRotate=()=>unlocked&&canControl()&&(mode==='open'||distance>=fitDistance()*.85);
+const canRotate=()=>unlocked&&canControl()&&(mode==='open'||order.length>0||distance>=fitDistance()*.85);
 function setText(id,text){if($(id).textContent!==text)$(id).textContent=text}
 function say(title,detail='',eyebrow='TAKE YOUR TIME'){setText('instruction',title);setText('detail',detail);setText('eyebrow',eyebrow)}
 function setMode(next){mode=next;modeTime=0;document.body.dataset.mode=next}
@@ -48,7 +48,7 @@ async function loadRegionContent(index){
 }
 function setRegionHeading(index){$('reading-region-label').textContent='｜'+regions[index].heading}
 function showContent(){if(!visited[entryRegion]){visited[entryRegion]=true;order.push(entryRegion);syncVisited()}wordAlpha[entryRegion]=wordDye[entryRegion]=1;let col=rgb(regions[entryRegion].color);reading.style.background=world>.99?mixedBackground(entryRegion,true):`rgb(${col.map(x=>Math.round((.37+x*.63)*255)).join(',')})`;reading.dataset.region=entryRegion;setText('reading-symbol',regions[entryRegion].title);setRegionHeading(entryRegion);setText('reading-intro','');setText('reading-title','');setText('reading-index',String(entryRegion+1).padStart(2,'0')+' / 06');reading.hidden=false;reading.style.opacity=0;scroller.scrollTop=0;$('experience').inert=true;setMode('reading');readingSince=performance.now();exitPressure=0;edgeAt=0;setText('exit-hint','往下閱讀');loadRegionContent(entryRegion);requestAnimationFrame(()=>{reading.style.opacity=1;scroller.focus({preventScroll:true})})}
-function leaveContent(){if(mode!=='reading')return;reading.style.opacity=0;setMode('leaving');$('experience').inert=false;distance=tdistance=returnDistance;$('portal').style.opacity=1;modeTime=0;}
+function leaveContent(){if(mode!=='reading')return;reading.style.opacity=0;setMode('leaving');$('experience').inert=false;pointers.clear();pinchDistance=0;distance=tdistance=returnDistance;$('portal').style.opacity=1;modeTime=0;}
 function openShell(){if(mode!=='explore'||order.length!==6||world<.99)return;dwell=0;setMode('opening');$('open-shell').hidden=true;if(soundOn){clearTimeout(crackTimer);crackTimer=setTimeout(()=>{if(soundOn&&mode==='opening'){crackSound.currentTime=0;crackSound.play().catch(()=>{setText('sound-status','請點擊右上角重新開啟聲音')})}},1300)}}
 function closeShell(){if(mode!=='open')return;setMode('closing');$('close-shell').hidden=true;}
 function jumpToWorld(){reset();unlocked=true;progress=curProgress=1;questionReady=true;observe=5;visited.fill(true);order=[0,1,2,3,4,5];wordAlpha.fill(1);wordDye.fill(1);world=1;worldTime=6;distance=tdistance=Math.max(fitDistance(),1.34/(.43*Math.tan(Math.PI/8)));setMode('explore');syncVisited()}
