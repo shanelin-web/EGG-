@@ -1,7 +1,7 @@
 import {regions,rgb,clamp,smooth,wrap,regionAt,simulatedSun} from './content.js';
 import {EggScene} from './scene.js';
 import {renderMarkdown} from './markdown.js';
-import {setupProjectDisclosure} from './expand-project-text.js';
+import {setupProjectDisclosure} from './expand-project-text.js?v=1.53';
 import {setupExperienceDisclosure} from './expand-experience.js';
 const $=id=>document.getElementById(id),canvas=$('egg-canvas'),reading=$('reading'),scroller=$('reading-scroll');
 let scene;try{scene=new EggScene(canvas)}catch(error){$('error-message').hidden=false;$('intro-veil').style.opacity=0;console.error(error);throw error}
@@ -72,7 +72,7 @@ $('close-shell').addEventListener('pointermove',e=>{if(dragCap&&e.clientY-capY>2
 $('close-shell').addEventListener('pointerup',()=>{dragCap=false;if(!capMoved)closeShell()});$('close-shell').onclick=()=>{if(mode==='open')closeShell()};
 scroller.addEventListener('touchstart',e=>{lastTouchY=e.touches[0]?.clientY||0},{passive:true});scroller.addEventListener('touchmove',e=>{let y=e.touches[0]?.clientY||0,dy=lastTouchY-y;lastTouchY=y;if(readWheel(dy*2))e.preventDefault()},{passive:false});
 window.addEventListener('keydown',e=>{if($('photo-viewer').open)return;if(e.key==='Escape'){if(mode==='reading')leaveContent();else if(mode==='open')closeShell();return}if(e.target.matches('input,button,a'))return;if(e.key==='PageDown'||e.key==='PageUp'){if(mode!=='reading'){e.preventDefault();adjustZoom(e.key==='PageDown'?.09:-.09)}return}if(!canRotate())return;let n=.12;if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();if(e.key==='ArrowLeft')tyaw-=n;if(e.key==='ArrowRight')tyaw+=n;if(e.key==='ArrowUp')tpitch+=n;if(e.key==='ArrowDown')tpitch-=n}});
-$('reading-body').addEventListener('click',e=>{const button=e.target.closest('.work-photo');if(!button)return;const image=button.querySelector('img');$('photo-full').src=image.src;$('photo-full').alt=image.alt;$('photo-caption').textContent=image.alt;$('photo-viewer').showModal()});
+$('reading-body').addEventListener('click',e=>{const button=e.target.closest('.work-photo, .presentation-slide');if(!button)return;const image=button.querySelector('img');$('photo-full').src=image.src;$('photo-full').alt=image.alt;$('photo-caption').textContent=image.alt;$('photo-viewer').showModal()});
 $('photo-close').addEventListener('click',()=>$('photo-viewer').close());
 $('photo-viewer').addEventListener('click',e=>{if(e.target===$('photo-viewer'))$('photo-viewer').close()});
 canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();$('error-message').hidden=false;setText('error-message','3D 顯示暫時中斷，請重新整理頁面後再試。')});
