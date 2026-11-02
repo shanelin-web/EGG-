@@ -54,9 +54,11 @@ function closeShell(){if(mode!=='open')return;setMode('closing');$('close-shell'
 function jumpToWorld(){reset();unlocked=true;progress=curProgress=1;questionReady=true;observe=5;visited.fill(true);order=[0,1,2,3,4,5];wordAlpha.fill(1);wordDye.fill(1);world=1;worldTime=6;distance=tdistance=Math.max(fitDistance(),1.34/(.43*Math.tan(Math.PI/8)));setMode('explore');syncVisited()}
 $('restart').onclick=reset;$('home').onclick=e=>{e.preventDefault();reset()};$('return').onclick=leaveContent;$('open-shell').onclick=openShell;
 $('world-test').onclick=jumpToWorld;
-let soundStatusTimer=0;
+let soundOn=false,soundStatusTimer=0,soundRequest=0;
+const backgroundMusic=$('background-music');backgroundMusic.volume=.35;
 function stopCrackSound(){}
-$('sound-toggle').onclick=()=>{$('sound-status').textContent='目前尚未加入聲音';clearTimeout(soundStatusTimer);soundStatusTimer=setTimeout(()=>{$('sound-status').textContent=''},2500)};
+function updateSoundUI(message){$('sound-toggle').classList.toggle('enabled',soundOn);$('sound-toggle').setAttribute('aria-pressed',String(soundOn));$('sound-toggle').setAttribute('aria-label',(soundOn?'關閉':'開啟')+'聲音');$('sound-status').textContent=message;clearTimeout(soundStatusTimer);soundStatusTimer=setTimeout(()=>{$('sound-status').textContent=''},2500)}
+$('sound-toggle').onclick=()=>{soundOn=!soundOn;const request=++soundRequest;if(!soundOn){backgroundMusic.pause();stopCrackSound();updateSoundUI('聲音已關閉');return}updateSoundUI('聲音已開啟');backgroundMusic.play().catch(()=>{if(request!==soundRequest||!soundOn)return;soundOn=false;updateSoundUI('背景音樂無法播放，請再試一次')})};
 $('axis-toggle').onclick=()=>{let c=$('axis-panel').classList.toggle('collapsed');$('axis-toggle').setAttribute('aria-expanded',String(!c));$('axis-toggle').setAttribute('aria-label',c?'展開視角控制':'收合視角控制')};
 $('yaw').oninput=e=>{if(canRotate())tyaw=yaw+wrap(Number(e.target.value)*rad-yaw)};$('pitch').oninput=e=>{if(canRotate())tpitch=pitch+wrap(Number(e.target.value)*rad-pitch)};$('zoom').oninput=e=>{if(!canControl())return;let next=Math.exp(Math.log(fitDistance()*.68)+(Math.log(coinDistance())-Math.log(fitDistance()*.68))*Number(e.target.value)/100);setZoomIntent(next<tdistance);tdistance=next};
 function readWheel(delta){const now=performance.now();if(now-readingSince<1000)return false;let top=scroller.scrollTop<=2,bottom=scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-3,atEdge=delta<0&&top||delta>0&&bottom;if(!atEdge){exitPressure=0;edgeAt=0;setText('exit-hint','往下閱讀');return false}if(!edgeAt||now-lastScrollAt>650){edgeAt=now;exitPressure=0}lastScrollAt=now;exitPressure+=Math.min(Math.abs(delta),95);setText('exit-hint','再'+(delta>0?'向下':'向上')+'滑一點，返回蛋殼');if(exitPressure>250)leaveContent();return true}
